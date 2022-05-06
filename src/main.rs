@@ -14,9 +14,12 @@ fn main() {
         io::stdin()
             .read_line(&mut guess)
             .expect("行の読み込みに失敗しました");
-        println!("次のように予想しました {}", guess);
-        let guess: u32 = guess.trim().parse()
-                        .expect("数値を入力してください");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
         match guess.cmp(&secret_number) {
             Ordering::Less => println!("正解よりも小さいです"),
             Ordering::Greater => println!("正解よりも大きいです"),
